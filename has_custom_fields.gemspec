@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{has_custom_fields}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = [%q{kylejginavan}]
-  s.date = %q{2011-09-04}
+  s.date = %q{2011-09-05}
   s.description = %q{Uses a vertical schema to add custom fields.}
   s.email = %q{kylejginavan@gmail.com}
   s.extra_rdoc_files = [
@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "SPECDOC",
     "VERSION",
+    "has_custom_fields.gemspec",
     "has_custom_fields.tmproj",
     "lib/custom_fields/custom_field_base.rb",
     "lib/has_custom_fields.rb",
