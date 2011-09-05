@@ -1,5 +1,6 @@
 require 'custom_fields/custom_field_base'
 include ::CustomFields
+
 module ActiveRecord # :nodoc:
   module Has # :nodoc:
     ##
