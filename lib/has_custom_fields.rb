@@ -221,8 +221,8 @@ module ActiveRecord # :nodoc:
             ActiveRecord::Base.transaction do
             
               self.connection.create_table(options[:fields_table_name], options) do |t|
-                t.string options[:name_field], :null => false
-                t.string :style, :null => false
+                t.string options[:name_field], :null => false, :limit => 63
+                t.string :style, :null => false, :limit => 15
                 t.string :select_options
                 scope_fkeys.each do |s|
                   t.integer s
@@ -253,7 +253,6 @@ module ActiveRecord # :nodoc:
                 t.integer options[:foreign_key], :null => false
                 t.integer options[:fields_table_name].foreign_key, :null => false
                 t.string options[:value_field], :null => false
-
                 t.timestamps
               end
               
