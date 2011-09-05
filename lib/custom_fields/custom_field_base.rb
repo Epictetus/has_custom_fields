@@ -4,7 +4,7 @@ module CustomFields
     serialize :select_options
     validates_presence_of :name,
       :message => 'Please specify the field name.'
-    validates_presence_of :select_options_csv,
+    validates_presence_of :select_options_data,
       :if => "self.style.to_sym == :select",
       :message => "You must enter options for the selection, separated by commas."
 
@@ -16,11 +16,11 @@ module CustomFields
       FOO
     end
   
-    def select_options_csv
+    def select_options_data
       (self.select_options || []).join(",")
     end
 
-    def select_options_csv=(csv)
+    def select_options_data=(csv)
       self.select_options = csv.split(",").collect{|f| f.strip}
     end
 
