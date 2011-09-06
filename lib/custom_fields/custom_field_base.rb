@@ -15,14 +15,15 @@ module CustomFields
         validates_inclusion_of :style, :in => ALLOWABLE_TYPES, :message => "Invalid style.  Should be #{ALLOWABLE_TYPES.join(', ')}."
       FOO
     end
-  
+
     def select_options_data
       (self.select_options || []).join(",")
     end
 
-    def select_options_data=(csv)
-      self.select_options = csv.split(",").collect{|f| f.strip}
+    def select_options_data=(data)
+      self.select_options = data.split(",").collect{|f| f.strip}
     end
 
+    scope :find_all_by_scope, lambda {|scope| {where("#{scope}_id = #{self.id}")}}
   end
 end
