@@ -229,7 +229,8 @@ module ActiveRecord # :nodoc:
                 end
                 t.timestamps
               end
-              self.connection.add_index options[:fields_table_name], scope_fkeys + [options[:name_field]], :unique => true
+              self.connection.add_index options[:fields_table_name], scope_fkeys + [options[:name_field]], :unique => true, 
+                :name => "#{options[:fields_table_name]}_unique_index"
             
               # add foreign keys for scoping tables
               options[:scopes].each do |s|
