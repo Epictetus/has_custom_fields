@@ -24,6 +24,6 @@ module CustomFields
       self.select_options = data.split(",").collect{|f| f.strip}
     end
 
-    scope :find_all_by_scope, lambda {|scope| {where("#{scope}_id = #{self.id}")}}
+    #scope :find_all_by_scope, lambda {|scope| {where("#{scope}_id = #{self.id}")}}
   end
 end

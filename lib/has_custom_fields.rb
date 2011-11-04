@@ -10,7 +10,7 @@ module ActiveRecord # :nodoc:
     #
     module CustomFields
 
-      ALLOWABLE_TYPES = ['select', 'boolean', 'text', 'date']
+      ALLOWABLE_TYPES = ['select', 'checkbox', 'text', 'date']
 
       Object.const_set('TagFacade', Class.new(Object)).class_eval do
         def initialize(object_with_custom_fields, scope, scope_id)
