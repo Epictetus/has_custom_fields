@@ -86,7 +86,7 @@ module ActiveRecord # :nodoc:
           # Provide default options
           options[:fields_class_name] ||= self.name + 'Field'
           options[:fields_table_name] ||= options[:fields_class_name].tableize
-          options[:fields_relationship_name] ||= options[:fields_class_name].tableize.to_sym
+          options[:fields_relationship_name] ||= options[:fields_class_name].underscore.to_sym
 
           options[:values_class_name] ||= self.name + 'Attribute'
           options[:values_table_name] ||= options[:values_class_name].tableize
@@ -252,17 +252,17 @@ module ActiveRecord # :nodoc:
               
               self.connection.create_table(options[:values_table_name], options) do |t|
                 t.integer options[:foreign_key], :null => false
-                t.integer options[:fields_table_name].foreign_key, :null => false
+                t.integer options[:fields_table_name].singularize.foreign_key, :null => false
                 t.string options[:value_field], :null => false
                 t.timestamps
               end
               
               self.connection.add_index options[:values_table_name], options[:foreign_key]
-              self.connection.add_index options[:values_table_name], options[:fields_table_name].foreign_key
+              self.connection.add_index options[:values_table_name], options[:fields_table_name].singularize.foreign_key
               
               self.connection.execute <<-FOO
                 alter table #{options[:values_table_name]} 
-                add foreign key (#{options[:fields_table_name].foreign_key})
+                add foreign key (#{options[:fields_table_name].singularize.foreign_key})
                 references #{options[:fields_table_name]}(#{eval(options[:fields_class_name]).primary_key})
               FOO
             end
@@ -327,11 +327,11 @@ module ActiveRecord # :nodoc:
         def get_value_object(attribute_name, scope, scope_id)
           ::Rails.logger.debug("scope/id is: #{scope}/#{scope_id}")
           options = custom_field_options[self.class.name]
-          model_fkey = options[:foreign_key]
+          model_fkey = options[:foreign_key].singularize
           fields_class = options[:fields_class_name]
           values_class = options[:values_class_name]
           value_field = options[:value_field]
-          fields_fkey = options[:fields_table_name].foreign_key
+          fields_fkey = options[:fields_table_name].singularize.foreign_key
           fields = Object.const_get(fields_class)
           values = Object.const_get(values_class)
           ::Rails.logger.debug("fkey is: #{fields_fkey}")
@@ -348,7 +348,6 @@ module ActiveRecord # :nodoc:
             value_object = values.new model_fkey => self.id,
               fields_fkey => f.id
           end
-
           return value_object
         end
 
